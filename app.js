@@ -871,6 +871,19 @@ app.post("/send", jsonParser, async (req, res) => {
    return res.json({ status:200,message: "Email sent" });
 });
 
+app.post("/send-enquiry", jsonParser, async (req, res) => {
+  
+    const mailBody = `<h1>For enquiry</h1><br><br>Email: ${req.body.email}<br><br>Mobile: ${req.body.mobile}`
+    const info = await transporter.sendMail({
+      from: '"Revive Immigration consultancy" <immigrationrevive@gmail.com>', 
+      to: "immigrationrevive@gmail.com",
+      subject: "Enquiry request",
+      html: mailBody,
+    });
+    console.log("Message sent: %s", info.messageId);
+    return res.json({ status:200,message: "Email sent" });
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
